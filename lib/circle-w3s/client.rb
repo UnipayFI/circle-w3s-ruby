@@ -1,9 +1,9 @@
-module CircleWallets
+module CircleW3s
   class Client
     attr_reader :config, :wallets, :transactions, :user_tokens, :challenge_ids,
                 :security_questions, :pin_codes
 
-    def initialize(configuration = CircleWallets.configuration)
+    def initialize(configuration = CircleW3s.configuration)
       @config = configuration || Configuration.new
       initialize_resources
     end
@@ -48,7 +48,7 @@ module CircleWallets
         faraday.headers["Authorization"] = "Bearer #{config.api_key}"
         faraday.headers["Content-Type"] = "application/json"
         faraday.headers["Accept"] = "application/json"
-        faraday.headers["User-Agent"] = "CircleWallets Ruby Gem #{CircleWallets::VERSION}"
+        faraday.headers["User-Agent"] = "CircleW3s Ruby Gem #{CircleW3s::VERSION}"
         faraday.options.timeout = config.timeout
         faraday.options.open_timeout = config.open_timeout
       end

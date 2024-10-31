@@ -1,4 +1,4 @@
-module CircleWallets
+module CircleW3s
   module Errors
     class ApiError < StandardError
       attr_reader :code, :response

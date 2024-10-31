@@ -1,4 +1,4 @@
-module CircleWallets
+module CircleW3s
   module Resources
     class UserTokens
       def initialize(client)

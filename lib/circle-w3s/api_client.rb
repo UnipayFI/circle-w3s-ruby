@@ -4,13 +4,13 @@ require 'tempfile'
 require 'uri'
 require 'faraday'
 
-module CircleWallets
+module CircleW3s
   class ApiClient
     attr_accessor :config, :default_headers, :user_agent
     
     def initialize(configuration = Configuration.new)
       @config = configuration
-      @user_agent = "CircleWallets Ruby Gem #{CircleWallets::VERSION}"
+      @user_agent = "CircleW3s Ruby Gem #{CircleW3s::VERSION}"
       @default_headers = {
         'Content-Type' => 'application/json',
         'User-Agent' => @user_agent
@@ -176,7 +176,7 @@ module CircleWallets
         response_data.transform_values { |value| deserialize(value, inner_type) }
       else
         # 假设是一个模型类
-        const_get("CircleWallets::Models::#{return_type}").new(response_data)
+        const_get("CircleW3s::Models::#{return_type}").new(response_data)
       end
     end
   end

@@ -1,4 +1,4 @@
-module CircleWallets
+module CircleW3s
   class WalletSetsApi
     attr_reader :api_client
 

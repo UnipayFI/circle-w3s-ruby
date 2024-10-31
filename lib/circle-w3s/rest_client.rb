@@ -2,7 +2,7 @@ require 'faraday'
 require 'json'
 require 'logger'
 
-module CircleWallets
+module CircleW3s
   class RestClient
     attr_reader :config, :logger
 

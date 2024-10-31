@@ -1,16 +1,16 @@
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "circle_wallets/version"
+require "circle-w3s/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "circle_wallets"
-  spec.version = CircleWallets::VERSION
+  spec.name = "circle-w3s"
+  spec.version = CircleW3s::VERSION
   spec.authors = ["Madao-3"]
   spec.email = ["madao.chris@gmail.com"]
 
-  spec.summary = "Circle User Controlled Wallets API Ruby SDK"
-  spec.description = "Ruby SDK for Circle's User Controlled Wallets API"
-  spec.homepage = "https://github.com/Madao-3/circle_wallets"
+  spec.summary = "Circle Web3 Services (W3S) Ruby SDK"
+  spec.description = "Ruby SDK for Circle's Web3 Services APIs including Developer Controlled Wallets"
+  spec.homepage = "https://github.com/Madao-3/circle-w3s"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
 

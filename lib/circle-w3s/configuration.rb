@@ -1,10 +1,10 @@
 require 'logger'
 require 'uri'
 
-module CircleWallets
+module CircleW3s
   class Configuration
     DEFAULT_BASE_PATH = "https://api.circle.com".freeze
-    DEFAULT_USER_AGENT = "CircleWallets Ruby Gem #{CircleWallets::VERSION}".freeze
+    DEFAULT_USER_AGENT = "CircleW3s Ruby Gem #{CircleW3s::VERSION}".freeze
 
     attr_accessor :api_key, :api_key_prefix
     attr_accessor :username, :password
@@ -85,7 +85,7 @@ module CircleWallets
         OS: #{RUBY_PLATFORM}
         Ruby Version: #{RUBY_VERSION}
         API Version: 1.0
-        SDK Package Version: #{CircleWallets::VERSION}
+        SDK Package Version: #{CircleW3s::VERSION}
       REPORT
     end
 

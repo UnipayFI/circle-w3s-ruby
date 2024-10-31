@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "circle_wallets"
+require "circle-w3s"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
