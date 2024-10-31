@@ -13,9 +13,6 @@ module CircleW3s
     end
 
     def post(path, body = {})
-      puts "Request URL: #{config.api_url}#{path}"
-      puts "Request Headers: #{connection.headers}"
-      puts "Request Body: #{body.inspect}"
       handle_response { connection.post(path, body) }
     end
 
@@ -44,7 +41,7 @@ module CircleW3s
         faraday.request :json
         faraday.response :json
         faraday.adapter Faraday.default_adapter
-        
+        p config.api_key, "config.api_key"
         faraday.headers["Authorization"] = "Bearer #{config.api_key}"
         faraday.headers["Content-Type"] = "application/json"
         faraday.headers["Accept"] = "application/json"

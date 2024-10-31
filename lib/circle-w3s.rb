@@ -1,38 +1,33 @@
-require "faraday"
-require "json"
-require "eth"
-require "jwt"
-
-require_relative "circle-w3s/version"
-require_relative "circle-w3s/configuration"
-require_relative "circle-w3s/client"
-require_relative "circle-w3s/errors/api_error"
-
-# Resources
-require_relative "circle-w3s/resources/wallets"
-require_relative "circle-w3s/resources/transactions"
-require_relative "circle-w3s/resources/user_tokens"
-require_relative "circle-w3s/resources/challenge_ids"
-require_relative "circle-w3s/resources/security_questions"
-require_relative "circle-w3s/resources/pin_codes"
+require 'circle-w3s/version'
+require 'circle-w3s/configuration'
+require 'circle-w3s/api_client'
+require 'circle-w3s/api/wallets_api'
+require 'circle-w3s/api/wallet_sets_api'
+require 'circle-w3s/api/transactions_api'
+require "circle-w3s/models/wallet"
+require "circle-w3s/models/wallet_set"
+require "circle-w3s/models/transaction"
+require "circle-w3s/models/create_wallet_request"
+require "circle-w3s/models/create_wallet_set_request"
 
 module CircleW3s
   class Error < StandardError; end
-  
+  class ApiError < Error; end
+  class UnauthorizedError < ApiError; end
+  class NotFoundError < ApiError; end
+  class BadRequestError < ApiError; end
+
   class << self
-    attr_accessor :configuration
-  end
+    def configuration
+      @configuration ||= Configuration.new
+    end
 
-  def self.configure
-    self.configuration ||= Configuration.new
-    yield(configuration) if block_given?
-  end
+    def configure
+      yield(configuration) if block_given?
+    end
 
-  def self.reset
-    self.configuration = Configuration.new
-  end
-
-  def self.client
-    @client ||= Client.new(configuration)
+    def reset
+      @configuration = Configuration.new
+    end
   end
 end

@@ -14,7 +14,8 @@ module CircleW3s
       headers['X-Request-Id'] = x_request_id if x_request_id
 
       response = api_client.call_api(
-        path: '/v1/w3s/developer/walletSets',
+        :post,
+        '/v1/w3s/developer/walletSets',
         http_method: :post,
         headers: headers,
         body: create_wallet_set_request,
@@ -52,11 +53,12 @@ module CircleW3s
       query_params[:pageAfter] = page_after if page_after
       query_params[:pageSize] = page_size if page_size
 
-      headers = { 'Accept' => 'application/json' }
+      headers = {}
       headers['X-Request-Id'] = x_request_id if x_request_id
 
       response = api_client.call_api(
-        path: '/v1/w3s/walletSets',
+        :get,
+        '/v1/w3s/walletSets',
         http_method: :get,
         query_params: query_params,
         headers: headers,

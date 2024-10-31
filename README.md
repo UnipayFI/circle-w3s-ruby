@@ -1,43 +1,89 @@
-# CircleW3s
+# Circle Web3 Services Ruby Client
 
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/circle-w3s`. To experiment with that code, run `bin/console` for an interactive prompt.
+Ruby client for Circle's Web3 Services API.
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
-Install the gem and add to the application's Gemfile by executing:
-
-```bash
-bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+Add this line to your application's Gemfile:
+```ruby
+gem "circle-w3s-ruby"
 ```
 
-If bundler is not being used to manage dependencies, install the gem by executing:
-
+And then execute:
 ```bash
-gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+bundle install
+```
+
+Or install it yourself as:
+```bash
+gem install circle-w3s-ruby
 ```
 
 ## Usage
 
-TODO: Write usage instructions here
+### Configuration
 
-## Development
+First, configure the client with your API credentials:
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+```ruby
+CircleW3s.configure do |config|
+  config.access_token = "TEST_API_KEY:your-key-id:your-key-secret"
+  config.host = "https://api-sandbox.circle.com"
+  config.entity_secret = "your-entity-secret"  # 32-byte hex string
+end
+```
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+### Examples
 
-## Contributing
+#### List Wallet Sets
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/circle-w3s. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/circle-w3s/blob/main/CODE_OF_CONDUCT.md).
+```ruby
+# Create API client
+client = CircleW3s::ApiClient.new(CircleW3s.configuration)
+wallet_sets_api = CircleW3s::WalletSetsApi.new(client)
 
-## License
+# Get wallet sets
+response = wallet_sets_api.get_wallet_sets
+puts response.data  # Access the wallet sets data
+```
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+#### Create Wallet Set
 
-## Code of Conduct
+```ruby
+# Create API client
+client = CircleW3s::ApiClient.new(CircleW3s.configuration)
+wallet_sets_api = CircleW3s::WalletSetsApi.new(client)
 
-Everyone interacting in the CircleW3s project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/circle-w3s/blob/main/CODE_OF_CONDUCT.md).
+# Create request with automatically generated entity_secret_ciphertext
+request = CircleW3s::CreateWalletSetRequest.new(
+  name: "My First Wallet Set",
+  entity_secret_ciphertext: CircleW3s.configuration.generate_entity_secret_ciphertext
+)
+
+# Create wallet set
+response = wallet_sets_api.create_wallet_set(request)
+puts response.data  # Access the created wallet set data
+```
+
+## Response Structure
+
+All API responses are wrapped in a structured object with the following attributes:
+- `data`: The actual response data
+- `success`: Boolean indicating if the request was successful
+- `status`: HTTP status code
+
+## Error Handling
+
+The client will raise exceptions for various error cases:
+- `CircleW3s::UnauthorizedError`: 401 authentication errors
+- `CircleW3s::ApiError`: Other API errors
+
+```ruby
+begin
+  response = wallet_sets_api.get_wallet_sets
+rescue CircleW3s::UnauthorizedError => e
+  puts "Authentication failed: #{e.message}"
+rescue CircleW3s::ApiError => e
+  puts "API error: #{e.message}"
+end
+```

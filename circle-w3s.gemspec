@@ -21,6 +21,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "eth", "~> 0.5.9"
   spec.add_dependency "jwt", "~> 2.7"
   
-  spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "dotenv", "~> 2.7"
+  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "dotenv"
 end
